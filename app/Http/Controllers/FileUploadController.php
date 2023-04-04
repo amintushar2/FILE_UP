@@ -53,7 +53,7 @@ return view('fileupload', ['files' => $files]);
         ->select (DB::raw('NVL(MAX(ID),0)+1 AS ID'))
         ->first();        
        //     echo $id->id;
-
+// eaff 
         $filename=time().$request->input('file_name').'.'.$request->file('fileloc')->getClientOriginalExtension();
         $file_size=$request->file('fileloc')->getSize();
 
