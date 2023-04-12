@@ -10,9 +10,10 @@
     
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
 
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <!-- <link href="{{ asset('/css/app.css') }}" rel="stylesheet"> -->
 
 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -20,8 +21,8 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha512-YUkaLm+KJ5lQXDBdqBqk7EVhJAdxRnVdT2vtCzwPHSweCzyMgYV/tgGF4/dCyqtCC2eCphz0lRQgatGVdfR0ww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
   <body>
    <div class="container">
@@ -37,7 +38,7 @@
   </div>
   @endif
 </div>
-
+<!-- //  {{route('reg.store')}} -->
     <form action="{{route('reg.store')}}" method="post" enctype="multipart/form-data">
 @csrf
   <!-- Name input -->
@@ -55,7 +56,7 @@
     
   </div class="form-outline mb-4">
 
-  <button type="submit" class="btn btn-primary btn-block mb-10">Upload</button>
+  <button type="submit" class="btn btn-primary btn-block mb-10  uploadbtn">Upload</button>
   </div>
  <div class="container justify-content-center" style="margin-top : 20px">
  @if( Session::get('delet'))
@@ -128,6 +129,26 @@
 
 </div>
 
+<script>
+var optionfeed= {
+  complete:function(response){
+if(!$.isEmptyObject(response.responseJSON.errors)){
+alert();
+
+}else{
+
+}
+  }
+};
+
+</script>
+<script>
+
+$('body').on('click','.uploadbtn',function(event){
+$(this).parents('from').ajaxForm(optionFeed);
+});
+
+</script>
  
   </body>
 </html>

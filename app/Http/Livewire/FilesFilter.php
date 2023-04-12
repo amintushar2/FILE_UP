@@ -14,7 +14,7 @@ class FilesFilter extends Component
      protected $paginationTheme = 'bootstrap';
  
      public $orderColumn = "id";
-     public $sortOrder = "desc";
+     public $sortOrder = "asc";
      public $sortLink = '<i class="sorticon fa-solid fa-caret-up"></i>';
      public $searchTerm = "";
  
@@ -41,7 +41,7 @@ class FilesFilter extends Component
  
      if(!empty($this->searchTerm)){
  
-          $file_search->orWhere('file_title','like',"%".$this->searchTerm."%");
+          $file_search->orWhere('file_title','like',"%".($this->searchTerm)."%");
           $file_search->orWhere('id','like',"%".$this->searchTerm."%");
       
      }

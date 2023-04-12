@@ -69,7 +69,8 @@ return view('fileupload', ['files' => $files]);
         $filedoc->file_size=number_format($file_size / 1048576,2);
        
        $filedoc ->save();
-				return redirect('upload')->with('status',"Insert successfully");
+			return redirect('upload')->with('status',"Insert successfully");
+			//	return ['status'=>"Insert successfully"];
         }catch(Exception $e){
             return redirect('upload')->with('failed',"operation failed");
         }
