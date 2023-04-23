@@ -97,10 +97,16 @@ return view('fileupload', ['files' => $files]);
         $filedoc->file_location=$request->file('fileloc')->storeAs('file',$filename);
         $filedoc->file_size=number_format($file_size / 1048576,2);
        $filedoc ->save();
+<<<<<<< HEAD
        return response()->json([
         'status' => 200,
     ]);
     }catch(Exception $e){
+=======
+			return redirect('upload')->with('status',"Insert successfully");
+			//	return ['status'=>"Insert successfully"];
+        }catch(Exception $e){
+>>>>>>> fe3ee6913e3fa0489064ca30a1a84268695e4d3d
             return redirect('upload')->with('failed',"operation failed");
         }
 

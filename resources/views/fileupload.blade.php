@@ -13,8 +13,17 @@
     
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
 
+<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+=======
+    <!-- <link href="{{ asset('/css/app.css') }}" rel="stylesheet"> -->
+
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+
+>>>>>>> fe3ee6913e3fa0489064ca30a1a84268695e4d3d
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 
@@ -24,8 +33,8 @@
 
 
 
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha512-YUkaLm+KJ5lQXDBdqBqk7EVhJAdxRnVdT2vtCzwPHSweCzyMgYV/tgGF4/dCyqtCC2eCphz0lRQgatGVdfR0ww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
   <body>
    <div class="container">
@@ -41,9 +50,15 @@
   </div>
   @endif
 </div>
+<<<<<<< HEAD
 
     <form enctype="multipart/form-data" id="insertFile" >
     @csrf
+=======
+<!-- //  {{route('reg.store')}} -->
+    <form action="{{route('reg.store')}}" method="post" enctype="multipart/form-data">
+@csrf
+>>>>>>> fe3ee6913e3fa0489064ca30a1a84268695e4d3d
   <!-- Name input -->
   <div class="form-outline mb-4">
   <label class="form-label" for="filename">Title</label>
@@ -60,7 +75,11 @@
 
   </div class="form-outline mb-4">
 
+<<<<<<< HEAD
   <button type="submit" class="btn btn-primary btn-block mb-10" id ="addfile">Upload</button>
+=======
+  <button type="submit" class="btn btn-primary btn-block mb-10  uploadbtn">Upload</button>
+>>>>>>> fe3ee6913e3fa0489064ca30a1a84268695e4d3d
   </div>
  <div class="container justify-content-center" style="margin-top : 20px">
  @if( Session::get('delet'))
@@ -120,6 +139,7 @@
 
 </div>
 
+<<<<<<< HEAD
 
 
 
@@ -161,6 +181,28 @@ $("#insertFile").submit(function(e) {
             }, 
 
   });
+=======
+<script>
+var optionfeed= {
+  complete:function(response){
+if(!$.isEmptyObject(response.responseJSON.errors)){
+alert();
+
+}else{
+
+}
+  }
+};
+
+</script>
+<script>
+
+$('body').on('click','.uploadbtn',function(event){
+$(this).parents('from').ajaxForm(optionFeed);
+});
+
+</script>
+>>>>>>> fe3ee6913e3fa0489064ca30a1a84268695e4d3d
  
 });
 fetAllFileData();
