@@ -2,23 +2,27 @@
 <html lang="en">
   <head>
 
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
     <title>My Website</title>
     
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
 
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-
-
-
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+
+
+
 
 
 
@@ -38,8 +42,8 @@
   @endif
 </div>
 
-    <form action="{{route('reg.store')}}" method="post" enctype="multipart/form-data">
-@csrf
+    <form enctype="multipart/form-data" id="insertFile" >
+    @csrf
   <!-- Name input -->
   <div class="form-outline mb-4">
   <label class="form-label" for="filename">Title</label>
@@ -52,10 +56,11 @@
   <div class="form-outline mb-4">
   <label class="form-label" for="fileloc">Select File</label>
     <input type="file" id="fileloc" class="form-control" name="fileloc"/>
-    
+    <span class="text-danger" id="file-input-error"></span>
+
   </div class="form-outline mb-4">
 
-  <button type="submit" class="btn btn-primary btn-block mb-10">Upload</button>
+  <button type="submit" class="btn btn-primary btn-block mb-10" id ="addfile">Upload</button>
   </div>
  <div class="container justify-content-center" style="margin-top : 20px">
  @if( Session::get('delet'))
@@ -94,9 +99,9 @@
 
 <div class ="container">
 <h1></h1>
-<table class="table table-striped">
+<table class="table table-striped" id="userTable" data-role="datatable">
           <thead>
-            <tr>
+            <tr >
               <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">Size</th>
@@ -105,29 +110,83 @@
 
             </tr>
           </thead>
-          <tbody>
-            @foreach($files as $file)
-
-              <tr>
-                <td width=10%>{{ $file->id}}</td>
-                <td width=50%>{{$file->file_title}}</td>
-                <td >{{$file->file_size}} MB</td>
-                <td width=10%> <button class="btn btn-outline-primary mb-10">
-                <a href="{{route('t.downfile',$file->id)}}">
-                <i class="bi bi-cloud-download-fill"></i>  Downlod</a></td>
-                <td width=10%> <button type="button" class="btn btn-outline-danger">
-                <a href="{{route('f.del',$file->id)}}">
-                Delete</a></td>
-
-                </button> 
-              
-              </tr>
-            @endforeach
+        
+          <tbody id ="memberBody">
+ 
+       
           </tbody>
+       
         </table>
 
 </div>
 
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script type='text/javascript'>
+$(function() {
+  $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$("#insertFile").submit(function(e) {
+  e.preventDefault();
+  const fd = new FormData(this);
+  $("#addFile").text('Adding...');
+  $.ajax({
+    url: '{{ route('reg.store') }}',
+    method: 'post',
+    data: fd,
+    cache: false,
+    contentType:  false,
+    processData: false,
+    dataType: 'json',
+     complete: function(response) {
+      if (response.status == 200) {
+              Swal.fire(
+                'Added!',
+                'Employee Added Successfully!',
+                'success'
+              )
+              fetAllFileData();
+              $("#insertFile")[0].reset();
+
+            }
+            }, 
+
+  });
  
+});
+fetAllFileData();
+function fetAllFileData(){
+
+  $.get("{{ URL::to('show') }}", function(data){ 
+    $('#memberBody').empty().html(data);
+
+    $('#userTable').DataTable({
+     
+    });
+                
+                
+            })
+}
+
+
+});
+
+
+</script>
+
+
+
+
+
+    
   </body>
 </html>

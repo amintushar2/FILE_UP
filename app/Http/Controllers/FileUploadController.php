@@ -16,6 +16,7 @@ function home(){
     $files = DB::table('file_doc')
     ->select('*')
     ->get();
+  
     return view('home', ['files' => $files]);
         // try {
         //     DB::connection()->getPDO();
@@ -25,6 +26,34 @@ function home(){
         //  }
     }
 
+    function homeer(){
+
+        $files = DB::table('file_doc')
+        ->select('*')
+        ->get();
+      
+        return view('welcome', ['files' => $files]);
+            // try {
+            //     DB::connection()->getPDO();
+            //     dump('Database is connected. Database Name is : ' . DB::connection()->getDatabaseName());
+            //  } catch (Exception $e) {
+            //     dump('Database connection failed');
+            //  }
+        }
+    function getFile(){
+
+        $files = DB::table('file_doc')
+        ->select('*')
+        ->get();
+      
+        return view('filelist', ['files' => $files]);
+            // try {
+            //     DB::connection()->getPDO();
+            //     dump('Database is connected. Database Name is : ' . DB::connection()->getDatabaseName());
+            //  } catch (Exception $e) {
+            //     dump('Database connection failed');
+            //  }
+        }
 
     function fileupload(){
 
@@ -67,12 +96,16 @@ return view('fileupload', ['files' => $files]);
         $filedoc->file_title=$data['file_name'];
         $filedoc->file_location=$request->file('fileloc')->storeAs('file',$filename);
         $filedoc->file_size=number_format($file_size / 1048576,2);
-       
        $filedoc ->save();
-				return redirect('upload')->with('status',"Insert successfully");
-        }catch(Exception $e){
+       return response()->json([
+        'status' => 200,
+    ]);
+    }catch(Exception $e){
             return redirect('upload')->with('failed',"operation failed");
         }
+
+
+
     //     $query=DB::table('file_doc')->insert([
 
     //         'file_name'=>$request->input('file_name'),
@@ -106,7 +139,7 @@ return view('fileupload', ['files' => $files]);
     ->where('ID','=',$id)
     ->first();
     //dd($download);
-
+    if ($request->ajax()){
     if(!optional($download)->file_location==null){
     if(\Storage::exists("{$download->file_location}")){
         \Storage::delete("{$download->file_location}");
@@ -123,7 +156,7 @@ return view('fileupload', ['files' => $files]);
    }else{
     return redirect('upload')->with('deletef',"operation failed");
 
-   }}
+   }}}
    
     }
 
