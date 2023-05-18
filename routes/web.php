@@ -22,6 +22,8 @@ use App\Http\Controllers\SmsApiController;
 Route::get('/upload',[FileUploadController::class,'fileupload']);
 Route::get('/',[FileUploadController::class,'home'])->name('hmm');
 Route::get('/downlod/{id}',[FileUploadController::class,'downloadfile'])->name('t.downfile');
+Route::get('/show',[FileUploadController::class,'getFile'])->name('show');
+Route::get('/show-user',[FileUploadController::class,'getFileUser'])->name('show-user');
 
 
 Route::post('/store',[FileUploadController::class,'store'])->name('reg.store');

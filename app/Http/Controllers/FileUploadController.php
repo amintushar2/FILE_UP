@@ -25,6 +25,35 @@ function home(){
         //  }
     }
 
+    function getFile(){
+
+        $files = DB::table('FILE_DOC')
+        ->select('*')
+        ->get();
+      //dd($files);
+        return view('filelist', ['files' => $files]);
+            // try {
+            //     DB::connection()->getPDO();
+            //     dump('Database is connected. Database Name is : ' . DB::connection()->getDatabaseName());
+            //  } catch (Exception $e) {
+            //     dump('Database connection failed');
+            //  }
+        }
+        
+    function getFileUser(){
+
+        $files = DB::table('FILE_DOC')
+        ->select('*')
+        ->get();
+      //dd($files);
+        return view('filelist-user', ['files' => $files]);
+            // try {
+            //     DB::connection()->getPDO();
+            //     dump('Database is connected. Database Name is : ' . DB::connection()->getDatabaseName());
+            //  } catch (Exception $e) {
+            //     dump('Database connection failed');
+            //  }
+        }
 
     function fileupload(){
 
