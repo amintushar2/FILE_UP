@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<<<<<<< HEAD
 <head>
 
+=======
+>>>>>>> 7bbb3642046e60c856f9237782cc8828e96bab86
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
