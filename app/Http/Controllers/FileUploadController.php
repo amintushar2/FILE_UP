@@ -26,35 +26,12 @@ function home(){
         //  }
     }
 
-<<<<<<< HEAD
     function getFile(){
 
         $files = DB::table('FILE_DOC')
         ->select('*')
         ->get();
       //dd($files);
-=======
-    function homeer(){
-
-        $files = DB::table('file_doc')
-        ->select('*')
-        ->get();
-      
-        return view('welcome', ['files' => $files]);
-            // try {
-            //     DB::connection()->getPDO();
-            //     dump('Database is connected. Database Name is : ' . DB::connection()->getDatabaseName());
-            //  } catch (Exception $e) {
-            //     dump('Database connection failed');
-            //  }
-        }
-    function getFile(){
-
-        $files = DB::table('file_doc')
-        ->select('*')
-        ->get();
-      
->>>>>>> 7bbb3642046e60c856f9237782cc8828e96bab86
         return view('filelist', ['files' => $files]);
             // try {
             //     DB::connection()->getPDO();
@@ -63,7 +40,6 @@ function home(){
             //     dump('Database connection failed');
             //  }
         }
-<<<<<<< HEAD
         
     function getFileUser(){
 
@@ -79,8 +55,6 @@ function home(){
             //     dump('Database connection failed');
             //  }
         }
-=======
->>>>>>> 7bbb3642046e60c856f9237782cc8828e96bab86
 
     function fileupload(){
 
