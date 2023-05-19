@@ -45,6 +45,7 @@ function home(){
 
         $files = DB::table('FILE_DOC')
         ->select('*')
+        ->orderBy('ID','asc')
         ->get();
       //dd($files);
         return view('filelist-user', ['files' => $files]);
@@ -95,6 +96,7 @@ return view('fileupload', ['files' => $files]);
         $filedoc= new FileDoc;
         $filedoc->id=$id->id;
         $filedoc->file_title=$data['file_name'];
+        $filedoc->catagory=$data['catagory'];
         $filedoc->file_location=$request->file('fileloc')->storeAs('file',$filename);
         $filedoc->file_size=number_format($file_size / 1048576,2);
        $filedoc ->save();
@@ -134,7 +136,7 @@ return view('fileupload', ['files' => $files]);
           return \Response::download($pathToFile);
     }
 
-   function deletefile($id){
+   function deletefile(Request $request,$id){
     $download=DB::table('FILE_DOC')
     ->select('*')
     ->where('ID','=',$id)

@@ -16,17 +16,16 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"
         integrity="sha512-YUkaLm+KJ5lQXDBdqBqk7EVhJAdxRnVdT2vtCzwPHSweCzyMgYV/tgGF4/dCyqtCC2eCphz0lRQgatGVdfR0ww=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -60,7 +59,7 @@
 <div class="d-grid gap-3 mx-auto" style="width: 200px;margin-top: 20px">
 
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fileUploadModal">
+<button type="button" class="btn btn-primary" data-toggle="modal" id="addFileModal"data-target="#fileUploadModal">
             ADD FILE
         </button>
 
@@ -197,9 +196,10 @@
 
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
     <script type='text/javascript'>
     $(function() {
         $.ajaxSetup({
@@ -207,6 +207,12 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $(document).on('click','#addFileModal',function(e) {
+
+                $('#fileUploadModal').modal('show');
+        });
+
         $("#insertFile").submit(function(e) {
             e.preventDefault();
             const fd = new FormData(this);
@@ -225,15 +231,18 @@
 
                         Swal.fire(
                             'Added!',
-                            'Employee Added Successfully!',
+                            'File Added Successfully!',
                             'success'
-                        )
-                        fetAllFileData();
+                        ).then(function(){
+    location.reload();
+});
+
 
                         $("#insertFile")[0].reset();
                         $('#fileUploadModal').modal('hide');
                         $('.modal-backdrop').remove();
 
+                        fetAllFileData();
 
 
                     }
@@ -253,10 +262,14 @@
                 $('#memberBody').empty().html(data);
 
                 $('#userTable').DataTable({
+                    
                     "bPaginate": true,
             "bAutoWidth": true,
+            "bProcessing": true,
             "pageLength": 10,
 			"fixedHeader": true,
+            "bDestroy": true,
+
 
                     initComplete: function() {
                         this.api()
@@ -286,13 +299,55 @@
                     },
 
                 });
-
-
             })
+
+            
         }
+
+        
+
+        $(document).on('click','#deleteFile',function(e) {
+            e.preventDefault();
+          
+
+var id=$(this).data('id');
+console.log(id);
+            $.ajax({
+                url: '/delete/'+id,
+                method: 'get',
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                complete: function(response) {
+
+                    if (response.status == 200) {
+                        Swal.fire(
+                            'Added!',
+                            'Successfully! Deleted',
+                            'Delete'
+                        ).then(function(){
+    location.reload();
+});
+                        
+                        fetAllFileData();
+                        
+
+                    }
+                },
+                error: function(response) {
+                    console.log(response);
+                }
+
+            });
+       
+        });
 
 
     });
+
+   
+
     </script>
 
 

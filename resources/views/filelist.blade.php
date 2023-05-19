@@ -9,7 +9,9 @@
   <a href="{{route('t.downfile',$file->id)}}"class="btn btn-outline-primary">
   <i class="bi bi-cloud-download-fill"></i>  Downlod</a></td>
   <td width=10%>
-  <a href="{{route('f.del',$file->id)}}"class="btn btn-outline-danger">
-  Delete</a></td>
+
+
+    <button type="submit" class="btn btn-outline-danger"data-id="{{$file->id}}" id="deleteFile">Delete </button>
+ </td>
 </tr>
 @endforeach
